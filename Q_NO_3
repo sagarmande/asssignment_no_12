@@ -1,0 +1,51 @@
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+def find_nth_from_end(head, N):
+    main = head
+    reference = head
+
+    # Move the reference pointer N nodes ahead
+    for _ in range(N):
+        if reference is None:
+            return -1  # Invalid Nth node (less than N nodes in the list)
+        reference = reference.next
+
+    # Move both pointers simultaneously
+    while reference is not None:
+        main = main.next
+        reference = reference.next
+
+    return main.data
+
+
+# Example 1:
+# Input: N = 2, LinkedList: 1->2->3->4->5->6->7->8->9
+# Output: 8
+
+head = Node(1)
+head.next = Node(2)
+head.next.next = Node(3)
+head.next.next.next = Node(4)
+head.next.next.next.next = Node(5)
+head.next.next.next.next.next = Node(6)
+head.next.next.next.next.next.next = Node(7)
+head.next.next.next.next.next.next.next = Node(8)
+head.next.next.next.next.next.next.next.next = Node(9)
+
+nth_node = find_nth_from_end(head, 2)
+print(nth_node)  # Output: 8
+
+# Example 2:
+# Input: N = 5, LinkedList: 1->2->3->4 (less than N nodes)
+# Output: -1
+
+head = Node(1)
+head.next = Node(2)
+head.next.next = Node(3)
+head.next.next.next = Node(4)
+
+nth_node = find_nth_from_end(head, 5)
+print(nth_node)  # Output: -1
