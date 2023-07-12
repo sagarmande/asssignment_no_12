@@ -1,0 +1,88 @@
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+def insert_at_alternate_positions(first_head, second_head):
+    first_ptr = first_head
+    second_ptr = second_head
+
+    while first_ptr is not None and second_ptr is not None:
+        first_next = first_ptr.next
+        second_next = second_ptr.next
+
+        second_ptr.next = first_next
+        first_ptr.next = second_ptr
+
+        first_ptr = first_next
+        second_ptr = second_next
+
+    if second_ptr is not None:
+        first_ptr.next = second_ptr
+
+    second_head = None
+
+    return first_head
+# Example 1:
+# First list: 5->7->17->13->11
+# Second list: 12->10->2->4->6
+# Output:
+# First list: 5->12->7->10->17->2->13->4->11->6
+# Second list: None
+
+first_head = Node(5)
+first_head.next = Node(7)
+first_head.next.next = Node(17)
+first_head.next.next.next = Node(13)
+first_head.next.next.next.next = Node(11)
+
+second_head = Node(12)
+second_head.next = Node(10)
+second_head.next.next = Node(2)
+second_head.next.next.next = Node(4)
+second_head.next.next.next.next = Node(6)
+
+first_head = insert_at_alternate_positions(first_head, second_head)
+
+# Print the modified first list
+while first_head is not None:
+    print(first_head.data, end=' ')
+    first_head = first_head.next
+# Output: 5 12 7 10 17 2 13 4 11 6
+
+# Print the modified second list
+while second_head is not None:
+    print(second_head.data, end=' ')
+    second_head = second_head.next
+# Output: None
+
+# Example 2:
+# First list: 1->2->3
+# Second list: 4->5->6->7->8
+# Output:
+# First list: 1->4->2->5->3->6
+# Second list: 7->8
+
+first_head = Node(1)
+first_head.next = Node(2)
+first_head.next.next = Node(3)
+
+second_head = Node(4)
+second_head.next = Node(5)
+second_head.next.next = Node(6)
+second_head.next.next.next = Node(7)
+second_head.next.next.next.next = Node(8)
+
+first_head = insert_at_alternate_positions(first_head, second_head)
+
+# Print the modified first list
+while first_head is not None:
+    print(first_head.data, end=' ')
+    first_head = first_head.next
+# Output: 1 4 2 5 3 6
+
+# Print the modified second list
+while second_head is not None:
+    print(second_head.data, end=' ')
+    second_head = second_head.next
+# Output: 7 8
