@@ -1,0 +1,76 @@
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+def traverse_and_delete(head, M, N):
+    if M == 0:
+        return None
+
+    current = head
+
+    while current is not None:
+        # Move M-1 nodes ahead
+        for _ in range(M - 1):
+            if current is None:
+                break
+            current = current.next
+
+        if current is None:
+            break
+
+        # Temporarily store the node after the current node
+        temp = current.next
+
+        # Traverse N nodes and delete them
+        for _ in range(N):
+            if temp is None:
+                break
+            next_node = temp.next
+            del temp
+            temp = next_node
+
+        # Set the next pointer of the current node to the temp pointer
+        current.next = temp
+
+        # Move the current pointer to the temp pointer
+        current = temp
+
+    return head
+# Example 1:
+# Input: M = 2, N = 3, LinkedList: 1->2->3->4->5->6->7->8->9
+# Output: 1->2->6->7
+
+head = Node(1)
+head.next = Node(2)
+head.next.next = Node(3)
+head.next.next.next = Node(4)
+head.next.next.next.next = Node(5)
+head.next.next.next.next.next = Node(6)
+head.next.next.next.next.next.next = Node(7)
+head.next.next.next.next.next.next.next = Node(8)
+head.next.next.next.next.next.next.next.next = Node(9)
+
+head = traverse_and_delete(head, 2, 3)
+
+while head is not None:
+    print(head.data, end=' ')
+    head = head.next
+# Output: 1 2 6 7
+
+# Example 2:
+# Input: M = 1, N = 2, LinkedList: 1->2->3->4->5
+# Output: 1->4
+
+head = Node(1)
+head.next = Node(2)
+head.next.next = Node(3)
+head.next.next.next = Node(4)
+head.next.next.next.next = Node(5)
+
+head = traverse_and_delete(head, 1, 2)
+
+while head is not None:
+    print(head.data, end=' ')
+    head = head.next
+# Output: 1 4
